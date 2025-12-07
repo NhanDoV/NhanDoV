@@ -25,7 +25,6 @@ def gh_get(url, params=None):
     r.raise_for_status()
     return r.json()
 
-
 def fetch_repos(username: str):
     repos = []
     page = 1
@@ -40,7 +39,6 @@ def fetch_repos(username: str):
         page += 1
     return repos
 
-
 def fetch_languages(repos):
     totals = defaultdict(int)
     for repo in repos:
@@ -48,7 +46,6 @@ def fetch_languages(repos):
         for name, bytes_ in langs.items():
             totals[name] += bytes_
     return totals
-
 
 def bucket_languages(lang_bytes: dict):
     buckets = {k: 0 for k in TARGET_LANGS}
@@ -70,17 +67,16 @@ def bucket_languages(lang_bytes: dict):
             buckets["Other"] += value
     return buckets
 
-
 def compute_percentages(buckets: dict):
     total = sum(buckets.values()) or 1
     perc = {}
     for k, v in buckets.items():
-        perc[k] = round(v * 100 / total)
-    diff = 100 - sum(perc.values())
-    if diff != 0:
-        perc["Other"] = max(0, perc["Other"] + diff)
+        perc[k] = (v * 100.0 / total)
+    # normalize gần 100, nếu cần
+    diff = 100.0 - sum(perc.values())
+    if abs(diff) > 0.01:
+        perc["Other"] = max(0.0, perc.get("Other", 0.0) + diff)
     return perc
-
 
 def build_badge(lang: str, pct: int) -> str:
     if lang == "C++":
