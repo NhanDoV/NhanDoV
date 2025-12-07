@@ -31,10 +31,12 @@
 
 ### 📊 GitHub Stats:
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=NhanDoV&show_icons=true&theme=radical" alt="stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=NhanDoV&layout=compact&theme=radical" alt="langs" />
+  ![C++](https://img.shields.io/badge/C%2B%2B-25%25-blue?style=flat&logo=c%2B%2B)
+  ![HTML](https://img.shields.io/badge/HTML-20%25-orange?style=flat&logo=html5)
+  ![SQL](https://img.shields.io/badge/SQL-15%25-darkblue?style=flat&logo=mysql)
+  ![Python](https://img.shields.io/badge/Python-30%25-yellowgreen?style=flat&logo=python)
+  ![CSS](https://img.shields.io/badge/CSS-10%25-blue?style=flat&logo=css3)
 </p>
-
 ---
 
 ⭐️ From [NhanDoV](https://github.com/NhanDoV)
