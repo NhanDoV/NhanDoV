@@ -29,18 +29,12 @@
 
 ---
 
-### 📊 GitHub Stats:### 📊 GitHub Stats
-
 ### 📊 GitHub Stats
 
-![Python](https://img.shields.io/badge/Python-20%25-yellowgreen?style=flat&logo=python)
-![Jupyter](https://img.shields.io/badge/Jupyter-5%25-orange?style=flat&logo=jupyter)
-![C++](https://img.shields.io/badge/C%2B%2B-20%25-blue?style=flat&logo=c%2B%2B)
-![HTML](https://img.shields.io/badge/HTML-15%25-orange?style=flat&logo=html5)
-![CSS](https://img.shields.io/badge/CSS-10%25-blue?style=flat&logo=css3)
-![SQL](https://img.shields.io/badge/SQL-10%25-darkblue?style=flat&logo=mysql)
-![JavaScript](https://img.shields.io/badge/JavaScript-15%25-yellow?style=flat&logo=javascript)
-![Other](https://img.shields.io/badge/Other-5%25-lightgrey?style=flat)
+<p align="center">
+<img src="https://github-readme-stats.vercel.app/api?username=NhanDoV&show_icons=true&theme=radical" alt="stats" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=NhanDoV&layout=compact&theme=radical" alt="langs" />
+</p>
 
 
 ---
