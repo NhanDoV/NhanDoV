@@ -25,7 +25,7 @@ jobs:
 
       - name: Update README language stats
         env:
-          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_USERNAME: "NhanDoV"
         run: |
           python scripts/update_lang_stats.py
