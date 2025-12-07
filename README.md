@@ -31,11 +31,13 @@
 
 ### 📊 GitHub Stats
 
-<p align="center">
-<img src="https://github-readme-stats.vercel.app/api?username=NhanDoV&show_icons=true&theme=radical" alt="stats" />
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=NhanDoV&layout=compact&theme=radical" alt="langs" />
-</p>
+<!-- STATS_START -->
 
+| 🏅 Grade (Stars) | 📚 Language Breakdown |
+|------------------|----------------------|
+| updating... | updating... |
+
+<!-- STATS_END -->
 
 ---
 

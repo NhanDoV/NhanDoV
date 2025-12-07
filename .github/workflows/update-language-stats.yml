@@ -1,0 +1,37 @@
+# .github/workflows/update-language-stats.yml
+name: Update language percentages
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # chạy mỗi ngày
+  workflow_dispatch:
+
+jobs:
+  update-langs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Update README language stats
+        env:
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          GH_USERNAME: "NhanDoV"
+        run: |
+          python scripts/update_lang_stats.py
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update language stats"
+          file_pattern: README.md
