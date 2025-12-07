@@ -21,11 +21,36 @@ TARGET_LANGS = ["Python", "Jupyter", "C++", "HTML", "CSS", "SQL", "Other"]
 
 
 def gh_get(url, params=None):
+    """
+        Send a GET request to the GitHub API using the shared session.
+
+        Args:
+            url (str): Full GitHub API endpoint URL.
+            params (dict, optional): Query parameters to include in the request.
+
+        Returns:
+            dict: JSON-decoded response from the GitHub API.
+
+        Raises:
+            HTTPError: If the response status indicates a failure.
+    """
     r = SESSION.get(url, params=params, timeout=20)
     r.raise_for_status()
     return r.json()
 
 def fetch_repos(username: str):
+    """
+        Fetch all repositories owned by a given GitHub user.
+
+        This function automatically paginates through the GitHub API
+        until all repositories are collected.
+
+        Args:
+            username (str): GitHub username.
+
+        Returns:
+            list[dict]: List of repository metadata objects.
+    """
     repos = []
     page = 1
     while True:
@@ -40,6 +65,15 @@ def fetch_repos(username: str):
     return repos
 
 def fetch_languages(repos):
+    """
+        Retrieve the language breakdown (in bytes) for all repositories.
+
+        Args:
+            repos (list[dict]): List of repository metadata dictionaries from GitHub.
+
+        Returns:
+            dict: Mapping from language name to total byte count across all repos.
+    """
     totals = defaultdict(int)
     for repo in repos:
         langs = gh_get(repo["languages_url"])
@@ -48,6 +82,18 @@ def fetch_languages(repos):
     return totals
 
 def bucket_languages(lang_bytes: dict):
+    """
+        Group raw language byte counts into predefined language buckets.
+
+        Languages are normalized and placed into one of the target groups:
+        Python, Jupyter, C++, HTML, CSS, SQL, or Other.
+
+        Args:
+            lang_bytes (dict): Raw language-to-byte mapping from GitHub.
+
+        Returns:
+            dict: Bucketed language byte totals.
+    """
     buckets = {k: 0 for k in TARGET_LANGS}
     for lang, value in lang_bytes.items():
         lname = lang.lower()
@@ -68,17 +114,43 @@ def bucket_languages(lang_bytes: dict):
     return buckets
 
 def compute_percentages(buckets: dict):
+    """
+        Convert byte totals into percentage contributions.
+
+        Percentages are rounded to two decimals and normalized
+        so that the total is approximately 100%.
+
+        Args:
+            buckets (dict): Language bucket totals in bytes.
+
+        Returns:
+            dict: Mapping of language to its percentage share.
+    """
     total = sum(buckets.values()) or 1
     perc = {}
+
     for k, v in buckets.items():
-        perc[k] = (v * 100.0 / total)
+        perc[k] = round((v * 100.0 / total), 2)
+
     # normalize gần 100, nếu cần
-    diff = 100.0 - sum(perc.values())
+    diff = round(100.0 - sum(perc.values()), 2)
+    
     if abs(diff) > 0.01:
         perc["Other"] = max(0.0, perc.get("Other", 0.0) + diff)
+
     return perc
 
 def build_badge(lang: str, pct: int) -> str:
+    """
+        Construct a Shields.io badge URL for a language percentage.
+
+        Args:
+            lang (str): Language bucket name.
+            pct (float or int): Percentage value for the language.
+
+        Returns:
+            str: Markdown-formatted badge image.
+    """
     if lang == "C++":
         label = "C%2B%2B"
         logo = "c%2B%2B"
@@ -119,8 +191,16 @@ def build_badge(lang: str, pct: int) -> str:
         base += f"&logo={logo}"
     return f"![{lang}]({base})"
 
-
 def build_markdown_row(perc: dict) -> str:
+    """
+        Create the full Markdown table row containing all language badges.
+
+        Args:
+            perc (dict): Mapping of languages to their percentage values.
+
+        Returns:
+            str: Markdown string containing a table row with badges.
+    """
     order = ["Python", "Jupyter", "C++", "HTML", "CSS", "SQL", "Other"]
     badges = [build_badge(lang, perc.get(lang, 0)) for lang in order]
     badges_str = " ".join(badges)
@@ -132,8 +212,19 @@ def build_markdown_row(perc: dict) -> str:
     )
     return row
 
-
 def update_readme(row_md: str):
+    """
+        Insert or update the language statistics block inside README.md.
+
+        Stats are placed between special markers:
+            <!-- STATS_START -->
+            <!-- STATS_END -->
+
+        If the block does not exist, it is appended to the README.
+
+        Args:
+            row_md (str): Markdown row containing language badges.
+    """
     path = "README.md"
     with open(path, "r", encoding="utf-8") as f:
         content = f.read()
@@ -163,7 +254,6 @@ def main():
     perc = compute_percentages(buckets)
     row_md = build_markdown_row(perc)
     update_readme(row_md)
-
 
 if __name__ == "__main__":
     main()
