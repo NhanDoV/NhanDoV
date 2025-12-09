@@ -19,7 +19,6 @@ SESSION.headers.update(
 
 TARGET_LANGS = ["Python", "Jupyter", "C++", "HTML", "CSS", "SQL", "Other"]
 
-
 def gh_get(url, params=None):
     """
         Send a GET request to the GitHub API using the shared session.
@@ -130,13 +129,13 @@ def compute_percentages(buckets: dict):
     perc = {}
 
     for k, v in buckets.items():
-        perc[k] = round((v * 100.0 / total), 2)
+        perc[k] = round((v * 100.0 / total), 5)
 
     # normalize gần 100, nếu cần
-    diff = round(100.0 - sum(perc.values()), 2)
+    diff = round(100.0 - sum(perc.values()), 5)
     
     if abs(diff) > 0.01:
-        perc["Other"] = max(0.0, perc.get("Other", 0.0) + diff)
+        perc["Other"] = round(max(0.0, perc.get("Other", 0.0) + diff), 3)
 
     return perc
 
