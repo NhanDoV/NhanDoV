@@ -17,7 +17,7 @@ SESSION.headers.update(
     }
 )
 
-TARGET_LANGS = ["Python", "Jupyter", "C++", "HTML", "CSS", "SQL", "Other"]
+TARGET_LANGS = ["Jupyter", "Python", "C++", "HTML", "CSS", "R", "Java", "Other"]
 
 def gh_get(url, params=None):
     """
@@ -96,6 +96,7 @@ def bucket_languages(lang_bytes: dict):
     buckets = {k: 0 for k in TARGET_LANGS}
     for lang, value in lang_bytes.items():
         lname = lang.lower()
+
         if lname == "python":
             buckets["Python"] += value
         elif "jupyter" in lname:
@@ -106,8 +107,10 @@ def bucket_languages(lang_bytes: dict):
             buckets["HTML"] += value
         elif "css" in lname:
             buckets["CSS"] += value
-        elif "sql" in lname:
-            buckets["SQL"] += value
+        elif lname in {"r", "rscript"}:
+            buckets["R"] += value
+        elif lname == "java":
+            buckets["Java"] += value
         else:
             buckets["Other"] += value
     return buckets
@@ -150,45 +153,30 @@ def build_badge(lang: str, pct: int) -> str:
         Returns:
             str: Markdown-formatted badge image.
     """
-    if lang == "C++":
-        label = "C%2B%2B"
-        logo = "c%2B%2B"
-    elif lang == "SQL":
-        label = "SQL"
-        logo = "mysql"
-    elif lang == "Python":
-        label = "Python"
-        logo = "python"
-    elif lang == "Jupyter":
-        label = "Jupyter"
-        logo = "jupyter"
-    elif lang == "HTML":
-        label = "HTML"
-        logo = "html5"
-    elif lang == "CSS":
-        label = "CSS"
-        logo = "css3"
-    else:
-        label = "Other"
-        logo = ""
-    color = "blue"
-    if lang == "Python":
-        color = "yellowgreen"
-    elif lang == "HTML":
-        color = "orange"
-    elif lang == "CSS":
-        color = "blue"
-    elif lang == "SQL":
-        color = "darkblue"
-    elif lang == "Jupyter":
-        color = "orange"
-    elif lang == "Other":
-        color = "lightgrey"
+    # central config → easy to maintain
+    CONFIG = {
+        "Python":  {"label": "Python",  "logo": "python",  "color": "yellowgreen"},
+        "Jupyter": {"label": "Jupyter", "logo": "jupyter", "color": "orange"},
+        "HTML":    {"label": "HTML",    "logo": "html5",   "color": "orange"},
+        "CSS":     {"label": "CSS",     "logo": "css3",    "color": "blue"},
+        "Java":    {"label": "Java",    "logo": "openjdk", "color": "red"},
+        "C++":     {"label": "C%2B%2B", "logo": "c%2B%2B",  "color": "blue"},
+        "R":       {"label": "R",       "logo": "r",       "color": "blue"},
+    }
 
-    base = f"https://img.shields.io/badge/{label}-{pct}%25-{color}?style=flat"
-    if logo:
-        base += f"&logo={logo}"
-    return f"![{lang}]({base})"
+    default_cfg = {"label": "Other", "logo": "", "color": "lightgrey"}
+
+    cfg = CONFIG.get(lang, default_cfg)
+
+    badge_url = (
+        f"https://img.shields.io/badge/"
+        f"{cfg['label']}-{pct}%25-{cfg['color']}?style=flat"
+    )
+
+    if cfg["logo"]:
+        badge_url += f"&logo={cfg['logo']}"
+
+    return f"![{lang}]({badge_url})"
 
 def build_markdown_row(perc: dict) -> str:
     """
