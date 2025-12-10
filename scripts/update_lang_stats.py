@@ -17,7 +17,7 @@ SESSION.headers.update(
     }
 )
 
-TARGET_LANGS = ["Jupyter", "Python", "C++", "HTML", "CSS", "R", "Java", "Other"]
+TARGET_LANGS = ["Jupyter", "Python", "C++", "HTML", "CSS", "R", "JavaScript", "Other"]
 
 def gh_get(url, params=None):
     """
@@ -109,8 +109,8 @@ def bucket_languages(lang_bytes: dict):
             buckets["CSS"] += value
         elif lname in {"r", "rscript"}:
             buckets["R"] += value
-        elif lname == "java":
-            buckets["Java"] += value
+        elif lname == "javascript":
+            buckets["JavaScript"] += value
         else:
             buckets["Other"] += value
     return buckets
@@ -155,13 +155,13 @@ def build_badge(lang: str, pct: int) -> str:
     """
     # central config → easy to maintain
     CONFIG = {
-        "Python":  {"label": "Python",  "logo": "python",  "color": "yellowgreen"},
-        "Jupyter": {"label": "Jupyter", "logo": "jupyter", "color": "orange"},
-        "HTML":    {"label": "HTML",    "logo": "html5",   "color": "orange"},
-        "CSS":     {"label": "CSS",     "logo": "css3",    "color": "blue"},
-        "Java":    {"label": "Java",    "logo": "openjdk", "color": "red"},
-        "C++":     {"label": "C%2B%2B", "logo": "c%2B%2B",  "color": "blue"},
-        "R":       {"label": "R",       "logo": "r",       "color": "blue"},
+        "Python":      {"label": "Python",  "logo": "python",  "color": "yellowgreen"},
+        "Jupyter":     {"label": "Jupyter", "logo": "jupyter", "color": "orange"},
+        "HTML":        {"label": "HTML",    "logo": "html5",   "color": "orange"},
+        "CSS":         {"label": "CSS",     "logo": "css3",    "color": "blue"},
+        "JavaScript":  {"label": "JavaScript", "logo": "javascript", "color": "yellow"},
+        "C++":         {"label": "C%2B%2B", "logo": "c%2B%2B",  "color": "blue"},
+        "R":           {"label": "R",       "logo": "r",       "color": "blue"},
     }
 
     default_cfg = {"label": "Other", "logo": "", "color": "lightgrey"}
@@ -188,7 +188,7 @@ def build_markdown_row(perc: dict) -> str:
         Returns:
             str: Markdown string containing a table row with badges.
     """
-    order = ["Jupyter", "Python", "C++", "HTML", "CSS", "R", "Java", "Other"]
+    order = ["Jupyter", "Python", "C++", "HTML", "CSS", "R", "JavaScript", "Other"]
     badges = [build_badge(lang, perc.get(lang, 0)) for lang in order]
     badges_str = " ".join(badges)
     grade_badge = "![Grade](https://img.shields.io/badge/Overall-A%2B-brightgreen?style=flat&logo=github)"
