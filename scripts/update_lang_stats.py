@@ -188,7 +188,7 @@ def build_markdown_row(perc: dict) -> str:
         Returns:
             str: Markdown string containing a table row with badges.
     """
-    order = ["Python", "Jupyter", "C++", "HTML", "CSS", "SQL", "Other"]
+    order = ["Jupyter", "Python", "C++", "HTML", "CSS", "R", "Java", "Other"]
     badges = [build_badge(lang, perc.get(lang, 0)) for lang in order]
     badges_str = " ".join(badges)
     grade_badge = "![Grade](https://img.shields.io/badge/Overall-A%2B-brightgreen?style=flat&logo=github)"
