@@ -35,7 +35,7 @@
 
 | 🏅 Grade (Stars) | 📚 Language Breakdown |
 |------------------|----------------------|
-| ![Grade](https://img.shields.io/badge/Overall-A%2B-brightgreen?style=flat&logo=github) | ![Jupyter](https://img.shields.io/badge/Jupyter-85.90759%25-orange?style=flat&logo=jupyter) ![Python](https://img.shields.io/badge/Python-1.40842%25-yellowgreen?style=flat&logo=python) ![C++](https://img.shields.io/badge/C%2B%2B-0.06289%25-blue?style=flat&logo=c%2B%2B) ![HTML](https://img.shields.io/badge/HTML-12.59327%25-orange?style=flat&logo=html5) ![CSS](https://img.shields.io/badge/CSS-0.01696%25-blue?style=flat&logo=css3) ![R](https://img.shields.io/badge/R-0.00206%25-blue?style=flat&logo=r) ![JavaScript](https://img.shields.io/badge/JavaScript-0.00484%25-yellow?style=flat&logo=javascript) ![Other](https://img.shields.io/badge/Other-0.00399%25-lightgrey?style=flat) |
+| ![Grade](https://img.shields.io/badge/Overall-A%2B-brightgreen?style=flat&logo=github) | ![Jupyter](https://img.shields.io/badge/Jupyter-85.8826%25-orange?style=flat&logo=jupyter) ![Python](https://img.shields.io/badge/Python-1.41492%25-yellowgreen?style=flat&logo=python) ![C++](https://img.shields.io/badge/C%2B%2B-0.06837%25-blue?style=flat&logo=c%2B%2B) ![HTML](https://img.shields.io/badge/HTML-12.59145%25-orange?style=flat&logo=html5) ![CSS](https://img.shields.io/badge/CSS-0.02033%25-blue?style=flat&logo=css3) ![R](https://img.shields.io/badge/R-0.01133%25-blue?style=flat&logo=r) ![JavaScript](https://img.shields.io/badge/JavaScript-0.00701%25-yellow?style=flat&logo=javascript) ![Other](https://img.shields.io/badge/Other-0.00398%25-lightgrey?style=flat) |
 
 <!-- STATS_END -->
 
